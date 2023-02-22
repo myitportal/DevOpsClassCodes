@@ -5,8 +5,8 @@ pipeline{
            stage('Checkout'){
 	    
                steps{
-		 echo 'cloning..'
-                 git 'https://github.com/akshu20791/DevOpsClassCodes.git'
+		 echo 'cloning...'
+                 git 'https://github.com/myitportal/DevOpsClassCodes'
               }
           }
           stage('Compile'){
