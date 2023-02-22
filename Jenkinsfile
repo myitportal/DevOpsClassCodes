@@ -5,7 +5,7 @@ pipeline{
            stage('Checkout'){
 	    
                steps{
-		 echo 'cloning'
+		 echo 'cloning..'
                  git 'https://github.com/myitportal/DevOpsClassCodes'
               }
           }
