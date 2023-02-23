@@ -1,14 +1,14 @@
 changesdonepipeline{
     tools{
         jdk 'myjava'
-        maven 'mymaven131'
+        maven 'maven2'
     }
     agent any
     stages{
         stage('Checkout on git'){
             agent any
             steps{
-                git 'https://github.com/devops-trainer/DevOpsClassCodes.git'
+                git 'https://github.com/myitportal/DevOpsClassCodes.git'
             }
         }
         stage('Compile'){
@@ -26,7 +26,7 @@ changesdonepipeline{
         stage('UnitTest'){
             agent {label 'win_slave'}
             steps{
-                git 'https://github.com/devops-trainer/DevOpsClassCodes.git'
+                git 'https://github.com/myitportal/DevOpsClassCodes.git'
                 bat 'mvn test'
             }
         }
@@ -37,7 +37,7 @@ changesdonepipeline{
             }
         }
         stage('Package'){
-            agent{label 'win_slave'}
+            agent any
             steps{
                 bat 'mvn package'
             }
