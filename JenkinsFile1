@@ -1,6 +1,6 @@
 changesdonepipeline{
     tools{
-        jdk 'myjava'
+        java 'jdk'
         maven 'maven2'
     }
     agent any
