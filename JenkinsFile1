@@ -1,9 +1,9 @@
-changesdonepipeline{
+pipeline{
+agent any
     tools{
-        java 'jdk'
-        maven 'maven2'
+        java 'Java'
+        maven 'Maven'
     }
-    agent any
     stages{
         stage('Checkout on git'){
             agent any
