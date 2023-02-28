@@ -1,7 +1,6 @@
 pipeline {
         agent any
   tools {maven 'maven2'}
-  options {skipStagesAfterUnstable()}
     }
     stages{
         stage("Checkout"){
