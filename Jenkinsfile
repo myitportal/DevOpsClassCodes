@@ -1,37 +1,51 @@
-pipeline {
-        agent any
-  tools {maven 'maven2'}
-    }
-    stages{
-        stage("Checkout"){
-            steps{
-                echo "starting the checkout"
-                git url: 'https://github.com/myitportal/DevOpsClassCodes.git'
-                echo "checkout"
-            }
-        }
-        stage("scr-code-compile"){
-            steps{
-                echo "here code would be converted from user readable launguage to machine readable launguage"
-                bat "mvn compile"
-            }
-        }
-        stage("scr-code-test"){
-            steps{
-                echo "here the testing of the project will happen from the testcases"
-                bat "mvn test"
-            }
-        }
-        stage("scr-code-qa"){
-            steps{
-                echo "here the code review would be done via pmd"
-                bat "mvn pmd:pmd"
-            }
-        }
-        stage("scr-code-package"){
-            steps{
-                echo "here the code would be converted to the package or executable file"
-                bat "mvn package"
-            }
-        }
-    }
+
+pipeline{
+	agent any
+      stages{
+           stage('Checkout'){
+	    
+               steps{
+		 echo 'cloning..'
+                 git 'https://github.com/akshu20791/DevOpsClassCodes.git'
+              }
+          }
+          stage('Compile'){
+             
+              steps{
+                  echo 'compiling..'
+                  sh 'mvn compile'
+	      }
+          }
+          stage('CodeReview'){
+		  
+              steps{
+		    
+		  echo 'codeReview'
+                  sh 'mvn pmd:pmd'
+              }
+          }
+           stage('UnitTest'){
+		  
+              steps{
+	         
+                  sh 'mvn test'
+              }
+               post {
+               success {
+                   junit 'target/surefire-reports/*.xml'
+               }
+           }	
+          }
+          
+          stage('Package'){
+		  
+              steps{
+		  
+                  sh 'mvn package'
+              }
+          }
+	     
+          
+      }
+}
+
