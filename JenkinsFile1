@@ -1,45 +1,38 @@
-pipeline{
-agent any
-    tools{
-        java 'Java'
-        maven 'Maven'
+pipeline {
+        agent any
+  tools {maven 'Maven'}
+  options {skipStagesAfterUnstable()}
     }
     stages{
-        stage('Checkout on git'){
-            agent any
+        stage("Checkout"){
             steps{
-                git 'https://github.com/myitportal/DevOpsClassCodes.git'
+                echo "starting the checkout"
+                git url: 'https://github.com/myitportal/DevOpsClassCodes.git'
+                echo "checkout"
             }
         }
-        stage('Compile'){
-            agent any
+        stage("scr-code-compile"){
             steps{
-                sh 'mvn compile'
+                echo "here code would be converted from user readable launguage to machine readable launguage"
+                bat "mvn compile"
             }
         }
-        stage('CodeReview'){
-            agent any
+        stage("scr-code-test"){
             steps{
-                sh 'mvn pmd:pmd'
+                echo "here the testing of the project will happen from the testcases"
+                bat "mvn test"
             }
         }
-        stage('UnitTest'){
-            agent {label 'win_slave'}
+        stage("scr-code-qa"){
             steps{
-                git 'https://github.com/myitportal/DevOpsClassCodes.git'
-                bat 'mvn test'
+                echo "here the code review would be done via pmd"
+                bat "mvn pmd:pmd"
             }
         }
-        stage('MetricCheck'){
-            agent any
+        stage("scr-code-package"){
             steps{
-                sh 'mvn cobertura:cobertura -Dcobertura.report.format=xml'
-            }
-        }
-        stage('Package'){
-            agent any
-            steps{
-                bat 'mvn package'
+                echo "here the code would be converted to the package or executable file"
+                bat "mvn package"
             }
         }
     }
